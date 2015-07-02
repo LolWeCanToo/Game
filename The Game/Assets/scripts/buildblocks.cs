@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class buildblocks : MonoBehaviour {
@@ -34,6 +34,28 @@ public class buildblocks : MonoBehaviour {
 		}
 		if (Input.GetButtonDown ("Fire2")) {
 			sectors.DestroyBlock();
+		}
+		if (Input.GetButtonDown ("MoveUp")) {
+			sectors.MoveBlocksUp( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+		}
+		if (Input.GetButtonDown ("MoveDown")) {
+			sectors.MoveBlocksDown( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+		}
+		if (Input.GetButtonDown ("MoveLeft")) {
+			if(gameObject.GetComponent<Terrain>())sectors.MoveBlocksLeft( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+			else if(gameObject.GetComponent<MeshFilter>())sectors.MoveBlocksLeft( new Vector3 (BlockX-BlockXS/2, BlockY-BlockYS/2, BlockZ-BlockZS/2),new Vector3 (BlockXS, BlockYS, BlockZS));
+		}
+		if (Input.GetButtonDown ("MoveRight")) {
+			if(gameObject.GetComponent<Terrain>())sectors.MoveBlocksRight( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+			else if(gameObject.GetComponent<MeshFilter>())sectors.MoveBlocksRight( new Vector3 (BlockX-BlockXS/2, BlockY-BlockYS/2, BlockZ-BlockZS/2),new Vector3 (BlockXS, BlockYS, BlockZS));
+		}
+		if (Input.GetButtonDown ("MoveForward")) {
+			if(gameObject.GetComponent<Terrain>())sectors.MoveBlocksForward( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+			else if(gameObject.GetComponent<MeshFilter>())sectors.MoveBlocksForward( new Vector3 (BlockX-BlockXS/2, BlockY-BlockYS/2, BlockZ-BlockZS/2),new Vector3 (BlockXS, BlockYS, BlockZS));
+		}
+		if (Input.GetButtonDown ("MoveBack")) {
+			if(gameObject.GetComponent<Terrain>())sectors.MoveBlocksBack( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+			else if(gameObject.GetComponent<MeshFilter>())sectors.MoveBlocksBack( new Vector3 (BlockX-BlockXS/2, BlockY-BlockYS/2, BlockZ-BlockZS/2),new Vector3 (BlockXS, BlockYS, BlockZS));
 		}
 	}
 }

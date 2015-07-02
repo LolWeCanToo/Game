@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class SectorsCreate : MonoBehaviour {
@@ -108,6 +108,89 @@ public class SectorsCreate : MonoBehaviour {
 					}
 				}
 			}
+		}
+		return false;
+	}
+	public bool MoveBlocksUp(Vector3 hpos, Vector3 hsize)
+	{
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			//go.GetComponent<TowerController>().upgradeTowerProgress = false;    
+			go.transform.position += new Vector3(0.0f, 0.5f, 0.0f);;    
+		}
+		return true;
+	}
+	public bool MoveBlocksDown(Vector3 hpos, Vector3 hsize)
+	{
+		bool canmove = true;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			if(go.transform.position.y < hpos.y+0.5)canmove=false;
+		}
+		if(canmove)
+		{
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			go.transform.position -= new Vector3(0.0f, 0.5f, 0.0f);    
+		}
+			return true;
+		}
+		return false;
+	}
+	public bool MoveBlocksLeft(Vector3 hpos, Vector3 hsize)
+	{
+		bool canmove = true;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			if(go.transform.position.x <= hpos.x+0.5)canmove=false;
+		} 
+		if(canmove)
+		{
+			foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+				go.transform.position -= new Vector3(0.5f, 0.0f, 0.0f);
+			}
+			return true;
+		}
+		return false;
+	}
+	public bool MoveBlocksRight(Vector3 hpos, Vector3 hsize)
+	{
+		bool canmove = true;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			if(go.transform.position.x >= hpos.x+hsize.x-0.5)canmove=false;
+		} 
+		if(canmove)
+		{
+			foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+				go.transform.position += new Vector3(0.5f, 0.0f, 0.0f);
+			}
+			return true;
+		}
+		return false;
+	}
+	public bool MoveBlocksForward(Vector3 hpos, Vector3 hsize)
+	{
+		bool canmove = true;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			if(go.transform.position.z >= hpos.z+hsize.z-0.5)canmove=false;
+		} 
+		if(canmove)
+		{
+			foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+				go.transform.position += new Vector3(0.0f, 0.0f, 0.5f);
+			}
+			return true;
+		}
+		return false;
+	}
+	public bool MoveBlocksBack(Vector3 hpos, Vector3 hsize)
+	{
+		bool canmove = true;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+			if(go.transform.position.z <= hpos.z+0.5)canmove=false;
+		} 
+		if(canmove)
+		{
+			foreach(GameObject go in GameObject.FindGameObjectsWithTag("building")) {
+				go.transform.position -= new Vector3(0.0f, 0.0f, 0.5f);
+			}
+			return true;
 		}
 		return false;
 	}
