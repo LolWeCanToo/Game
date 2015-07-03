@@ -43,8 +43,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
 
         // Use this for initialization
+		Crosshair camera;
         private void Start()
         {
+			camera = gameObject.GetComponent<Crosshair> ();
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -231,10 +233,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+			if(!camera.showcursor) m_MouseLook.LookRotation (transform, m_Camera.transform);
         }
 
 

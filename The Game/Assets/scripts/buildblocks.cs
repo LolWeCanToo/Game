@@ -8,8 +8,10 @@ public class buildblocks : MonoBehaviour {
 	public int sectorsamount;
 	float BlockX, BlockY, BlockZ;
 	float BlockXS, BlockYS, BlockZS;
+	int type = 1;
 	SectorsCreate sectors;
 	// Use this for initialization
+	Crosshair camera;
 	void Start () {
 		/*BlockX = (int)Terrain.activeTerrain.terrainData.size.x;
 		BlockY = (int)Terrain.activeTerrain.terrainData.size.y;
@@ -22,6 +24,7 @@ public class buildblocks : MonoBehaviour {
 		BlockZ = (float)gameObject.transform.position.z;
 		//print(BlockX+";"+BlockY+";"+BlockZ);
 		sectors = gameObject.GetComponent<SectorsCreate> ();
+		camera = Camera.main.GetComponent<Crosshair> ();
 		//sectors.CreateBlocks (world.transform, new Vector3 (BlockX, BlockY, BlockZ), sectorsamount);
 	//	plane = (Plane)pl.GetComponent(Plane);
 	}
@@ -30,10 +33,10 @@ public class buildblocks : MonoBehaviour {
 	void Update () {
 
 	if (Input.GetButtonDown ("Fire1")) {
-			sectors.CreateBlock( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
+			if(!camera.showcursor)sectors.CreateBlock( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS),type);
 		}
 		if (Input.GetButtonDown ("Fire2")) {
-			sectors.DestroyBlock();
+			if(!camera.showcursor)sectors.DestroyBlock();
 		}
 		if (Input.GetButtonDown ("MoveUp")) {
 			sectors.MoveBlocksUp( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
@@ -57,5 +60,12 @@ public class buildblocks : MonoBehaviour {
 			if(gameObject.GetComponent<Terrain>())sectors.MoveBlocksBack( new Vector3 (BlockX, BlockY, BlockZ),new Vector3 (BlockXS, BlockYS, BlockZS));
 			else if(gameObject.GetComponent<MeshFilter>())sectors.MoveBlocksBack( new Vector3 (BlockX-BlockXS/2, BlockY-BlockYS/2, BlockZ-BlockZS/2),new Vector3 (BlockXS, BlockYS, BlockZS));
 		}
+		if (Input.GetButtonDown ("1")) {
+			type=1;
+		}
+		if (Input.GetButtonDown ("2")) {
+			type=2;
+		}
+
 	}
 }

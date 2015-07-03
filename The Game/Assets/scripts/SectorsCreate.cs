@@ -3,7 +3,9 @@ using System.Collections;
 
 public class SectorsCreate : MonoBehaviour {
 	float BlockX, BlockY, BlockZ, sectors; 
-	public GameObject obj;
+	GameObject obj;
+	public GameObject obj1;
+	public GameObject obj2;
 	GameObject enemy;
 	public void CreateSectors(Transform world, Vector3 blockworld, int sectors)
 	{
@@ -49,8 +51,12 @@ public class SectorsCreate : MonoBehaviour {
 		}
 	}
 	int nextNameNumber = 0;
-	public bool CreateBlock(Vector3 hpos, Vector3 hsize)
+	public bool CreateBlock(Vector3 hpos, Vector3 hsize, int type)
 	{
+		if (type == 1)
+			obj = obj1;
+		if (type == 2)
+			obj = obj2;
 		RaycastHit hit;
 		if (Physics.Raycast (Camera.main.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0)), out hit, 80)) {
 			if (hit.collider.gameObject == gameObject || hit.collider.gameObject.tag=="building") 
@@ -59,9 +65,15 @@ public class SectorsCreate : MonoBehaviour {
 				if (hit.collider.gameObject.tag=="building") {
 					Vector3 pos = hit.collider.transform.position;
 					pos += hit.normal / 2;
+					//obj.GetComponent<Collider>().bounds.size.x/2;
 					if (Vector3.Distance (this.transform.position, pos) > 0) {
-						enemy = (GameObject)Instantiate (obj, pos, Quaternion.identity);
+						enemy = (GameObject)Instantiate (obj, pos, Quaternion.AngleAxis(90,new Vector3(0f,0f,-90f)));//Quaternion.identity);
 						enemy.name = "block" + nextNameNumber;
+						if(type==2)
+						{
+							if(hit.normal.x<0)enemy.transform.position += new Vector3((0.5f-enemy.GetComponent<Collider>().bounds.size.x)/2,0f,0f);
+							else enemy.transform.position -= new Vector3((0.5f-enemy.GetComponent<Collider>().bounds.size.x)/2,0f,0f);
+						}
 						nextNameNumber++;
 						return true;
 					}
